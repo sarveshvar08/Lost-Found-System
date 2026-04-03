@@ -70,6 +70,8 @@ lost_and_found/
 └── images/
 
 
+![alt text](<Open Application[GUI] (1).png>)
+
 ---
 
 ## ▶️ Run Locally
@@ -101,23 +103,3 @@ If you like this project:
 ⭐ Star the repository
 🍴 Fork and improve
 📢 Share with others
-
----
-
-# 🎯 DONE ✅
-
-Now your README is:
-- 🔥 Animated  
-- 💼 Portfolio-ready  
-- 📊 Professional  
-- 🚀 GitHub-level  
-
----
-
-If you want next upgrade:
-
-👉 Add **screenshots section**  
-👉 Add **dark/light theme toggle badges**  
-👉 Make it **top 1% GitHub style**
-
-Just say: **"upgrade README more"** 😎
