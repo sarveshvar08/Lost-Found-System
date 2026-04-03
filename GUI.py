@@ -6,6 +6,7 @@ import os
 import shutil
 import time
 from PIL import Image, ImageTk
+from data_handler import delete_item
 
 
 class LostAndFoundGUI:
@@ -46,6 +47,14 @@ class LostAndFoundGUI:
         desc_entry = tk.Entry(self.root, width=30)
         desc_entry.pack(pady=5)
 
+        tk.Label(self.root, text="Location").pack()
+        location_entry = tk.Entry(self.root, width=30)
+        location_entry.pack(pady=5)
+
+        tk.Label(self.root, text="Mobile Number").pack()
+        mobile_entry = tk.Entry(self.root, width=30)
+        mobile_entry.pack(pady=5)
+
         image_path = tk.StringVar()
         preview_label = tk.Label(self.root)
         preview_label.pack(pady=10)
@@ -70,9 +79,12 @@ class LostAndFoundGUI:
         def submit():
             name = name_entry.get().strip()
             desc = desc_entry.get().strip()
+            location = location_entry.get().strip()
+            mobile_no = mobile_entry.get().strip()
+
             img_src = image_path.get()
 
-            if not validate_input(name, desc):
+            if not validate_input(name, desc, location, mobile_no):
                 messagebox.showerror("Error", "Please fill all fields")
                 return
 
@@ -93,7 +105,7 @@ class LostAndFoundGUI:
                     messagebox.showerror("Error", f"Image failed: {e}")
                     return
 
-            item = format_item(name, desc, img_dest)
+            item = format_item(name, desc, location, mobile_no, img_dest)
             save_item(item)
 
             messagebox.showinfo("Success", "Item saved successfully!")
@@ -131,6 +143,8 @@ class LostAndFoundGUI:
             for item in results:
                 result_box.insert(tk.END, f"Name: {item['name']}\n")
                 result_box.insert(tk.END, f"Description: {item['description']}\n")
+                result_box.insert(tk.END, f"Location: {item['location']}\n")
+                result_box.insert(tk.END, f"Mobile: {item['mobile_no']}\n")
                 result_box.insert(tk.END, "-" * 40 + "\n")
 
         tk.Button(self.root, text="Search", command=search).pack(pady=5)
@@ -165,6 +179,8 @@ class LostAndFoundGUI:
         for item in items:
             tk.Label(scroll_frame, text=f"Name: {item['name']}", font=("Arial", 10, "bold")).pack()
             tk.Label(scroll_frame, text=f"Description: {item['description']}").pack()
+            tk.Label(scroll_frame, text=f"Location: {item['location']}").pack()
+            tk.Label(scroll_frame, text=f"Mobile: {item['mobile_no']}").pack()
 
             if item["image"] and os.path.exists(item["image"]):
                 try:

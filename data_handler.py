@@ -9,7 +9,7 @@ def save_item(item):
     file_exists = os.path.isfile(FILE_NAME)
 
     with open(FILE_NAME, mode='a', newline='', encoding='utf-8') as file:
-        fieldnames = ["name", "description", "image"]
+        fieldnames = ["name", "description", "location", "mobile_no", "image"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
 
         # Write header only once
@@ -33,6 +33,8 @@ def read_items():
             items.append({
                 "name": row.get("name", ""),
                 "description": row.get("description", ""),
+                "location": row.get("location", ""),
+                "mobile_no": row.get("mobile_no", ""),
                 "image": row.get("image", "")
             })
 
@@ -51,3 +53,4 @@ def search_items(keyword):
             results.append(item)
 
     return results
+
