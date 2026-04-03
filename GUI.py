@@ -1,5 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
+from data_handler import save_item
+from models import validate_input, format_item
+import os
+import shutil
+import time
 
 
 class LostAndFoundGUI:
@@ -33,7 +38,7 @@ class LostAndFoundGUI:
 
         tk.Label(self.root, text="Report Item", font=("Arial", 14)).pack(pady=10)
 
-        # Item Name
+        # Name
         tk.Label(self.root, text="Item Name").pack()
         name_entry = tk.Entry(self.root, width=30)
         name_entry.pack(pady=5)
@@ -46,7 +51,7 @@ class LostAndFoundGUI:
         # Image path
         image_path = tk.StringVar()
 
-        # Upload Image
+        # Upload image
         def upload_image():
             file_path = filedialog.askopenfilename(
                 filetypes=[("Image Files", "*.png *.jpg *.jpeg")]
@@ -59,35 +64,58 @@ class LostAndFoundGUI:
 
         # Submit
         def submit():
-            name = name_entry.get()
-            desc = desc_entry.get()
-            img = image_path.get()
+            name = name_entry.get().strip()
+            desc = desc_entry.get().strip()
+            img_src = image_path.get()
 
-            print("Name:", name)
-            print("Description:", desc)
-            print("Image:", img)
+            # Validate
+            if not validate_input(name, desc):
+                messagebox.showerror("Error", "Please fill all fields")
+                return
 
-            messagebox.showinfo("Success", "Data captured!")
+            # Create images folder
+            if not os.path.exists("images"):
+                os.makedirs("images")
+
+            img_dest = ""
+
+            # Copy image
+            if img_src:
+                try:
+                    ext = img_src.split(".")[-1]
+                    safe_name = name.replace(" ", "_")
+                    filename = f"{safe_name}_{int(time.time())}.{ext}"
+
+                    img_dest = os.path.join("images", filename)
+
+                    shutil.copy(img_src, img_dest)
+
+                except Exception as e:
+                    messagebox.showerror("Error", f"Image copy failed: {e}")
+                    return
+
+            # Save data
+            item = format_item(name, desc, img_dest)
+            save_item(item)
+
+            messagebox.showinfo("Success", "Item saved successfully!")
+            self.main_menu()
 
         tk.Button(self.root, text="Submit", command=submit).pack(pady=10)
-
-        # Back
         tk.Button(self.root, text="Back", command=self.main_menu).pack(pady=5)
 
     # ================= SEARCH =================
     def search_item(self):
         self.clear_screen()
 
-        tk.Label(self.root, text="Search Screen", font=("Arial", 14)).pack(pady=20)
-
+        tk.Label(self.root, text="Search Screen (Next Step)", font=("Arial", 14)).pack(pady=20)
         tk.Button(self.root, text="Back", command=self.main_menu).pack(pady=10)
 
     # ================= VIEW =================
     def view_items(self):
         self.clear_screen()
 
-        tk.Label(self.root, text="View Items Screen", font=("Arial", 14)).pack(pady=20)
-
+        tk.Label(self.root, text="View Items Screen (Next Step)", font=("Arial", 14)).pack(pady=20)
         tk.Button(self.root, text="Back", command=self.main_menu).pack(pady=10)
 
 
