@@ -94,16 +94,18 @@ python main.py
 📦 Build Executable
 python -m PyInstaller --onefile --windowed main.py
 
-Executable will be created in:
-
+Executable will be created in: 
 dist/main.exe
+
+---
+
 🌟 Future Improvements
-🔐 User authentication
-☁️ Firebase / cloud database
-📱 Mobile app version
-📍 Map integration
-🧠 AI-based item matching
-👨‍💻 Author
+  🔐 User authentication
+  ☁️ Firebase / cloud database
+  📱 Mobile app version
+  📍 Map integration
+  🧠 AI-based item matching
+
 
 
 Learning by building real-world projects.
