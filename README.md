@@ -77,20 +77,16 @@ It features a clean UI, image support, and an easy-to-use system for tracking lo
 
 ---
 
-## 📁 Project Structure
+### 📁 Project Structure
+<p align="center">
+  <img src="assets/structure.png" width="600">
+</p>
 
+---
 
-lost_and_found/
-│
-├── main.py
-├── GUI.py
-├── data_handler.py
-├── models.py
-├── data_files.csv
-└── images/
-
-
-![alt text](<Open Application[GUI] (1).png>)
+### 📝 WorkFlow
+<p align="center">
+  <img src="assets/workflow.png" width="600">
 
 ---
 
