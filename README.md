@@ -105,7 +105,7 @@ dist/main.exe
 🧠 AI-based item matching
 👨‍💻 Author
 
-Developed by Sarvesh 🚀
+
 Learning by building real-world projects.
 
 ⭐ Support
