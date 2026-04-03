@@ -23,32 +23,28 @@ It features a clean UI, image support, and an easy-to-use system for tracking lo
 
 ---
 
-## 🎥 Demo
 
-<p align="center">
-  <img src="assets/demo.gif" width="600">
-</p>
 
 ## 📸 Screenshots
 
 ### 🏠 Home Screen
 <p align="center">
-  <img src="assets/home.png" width="600">
+  <img src="assets/home.png" width="300">
 </p>
 
 ### ➕ Report Item
 <p align="center">
-  <img src="assets/report.png" width="600">
+  <img src="assets/report.png" width="300">
 </p>
 
 ### 🔍 Search Items
 <p align="center">
-  <img src="assets/search.png" width="600">
+  <img src="assets/search.png" width="300">
 </p>
 
 ### 📋 View Items
 <p align="center">
-  <img src="assets/view.png" width="600">
+  <img src="assets/view.png" width="300">
 </p>
 
 ---
@@ -79,14 +75,14 @@ It features a clean UI, image support, and an easy-to-use system for tracking lo
 
 ### 📁 Project Structure
 <p align="center">
-  <img src="assets/structure.png" width="600">
+  <img src="assets/structure.png" width="300">
 </p>
 
 ---
 
 ### 📝 WorkFlow
 <p align="center">
-  <img src="assets/workflow.png" width="600">
+  <img src="assets/workflow.png" width="300">
 
 ---
 
