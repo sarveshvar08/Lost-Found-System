@@ -1,7 +1,8 @@
-from GUI import LostAndFoundGUI
+from GUI import LostAndFoundApp
 
 def main():
-    app = LostAndFoundGUI()
+    app = LostAndFoundApp()
+    app.mainloop()
 
 if __name__ == "__main__":
     main()
