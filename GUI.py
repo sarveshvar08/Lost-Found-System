@@ -118,7 +118,3 @@ class LostAndFoundGUI:
         tk.Label(self.root, text="View Items Screen (Next Step)", font=("Arial", 14)).pack(pady=20)
         tk.Button(self.root, text="Back", command=self.main_menu).pack(pady=10)
 
-
-# ================= RUN =================
-if __name__ == "__main__":
-    app = LostAndFoundGUI()
