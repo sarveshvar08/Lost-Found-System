@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from data_handler import save_item, read_items, search_items
+from data_handler import save_item, read_items, search_items, delete_item
 from models import validate_input, format_item
 import os
 import shutil
 import time
 from PIL import Image, ImageTk
-from data_handler import delete_item
 
 
 class LostAndFoundGUI:
@@ -51,7 +50,7 @@ class LostAndFoundGUI:
         location_entry = tk.Entry(self.root, width=30)
         location_entry.pack(pady=5)
 
-        tk.Label(self.root, text="Mobile Number").pack()
+        tk.Label(self.root, text="Mobile No").pack()
         mobile_entry = tk.Entry(self.root, width=30)
         mobile_entry.pack(pady=5)
 
@@ -66,7 +65,6 @@ class LostAndFoundGUI:
             if file_path:
                 image_path.set(file_path)
 
-                # Preview
                 img = Image.open(file_path)
                 img = img.resize((150, 150))
                 photo = ImageTk.PhotoImage(img)
@@ -81,7 +79,6 @@ class LostAndFoundGUI:
             desc = desc_entry.get().strip()
             location = location_entry.get().strip()
             mobile_no = mobile_entry.get().strip()
-
             img_src = image_path.get()
 
             if not validate_input(name, desc, location, mobile_no):
@@ -123,29 +120,50 @@ class LostAndFoundGUI:
         search_entry = tk.Entry(self.root, width=30)
         search_entry.pack(pady=5)
 
-        result_box = tk.Text(self.root, height=12, width=50)
-        result_box.pack(pady=10)
+        canvas = tk.Canvas(self.root)
+        scrollbar = tk.Scrollbar(self.root, orient="vertical", command=canvas.yview)
+        scroll_frame = tk.Frame(canvas)
+
+        scroll_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+
+        canvas.create_window((0, 0), window=scroll_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+        def checkout(item):
+            delete_item(item)
+            messagebox.showinfo("Success", "Item checked out!")
+            self.search_item()
 
         def search():
+            for widget in scroll_frame.winfo_children():
+                widget.destroy()
+
             keyword = search_entry.get().strip()
-            result_box.delete(1.0, tk.END)
-
-            if not keyword:
-                result_box.insert(tk.END, "Enter a keyword\n")
-                return
-
             results = search_items(keyword)
 
             if not results:
-                result_box.insert(tk.END, "No items found\n")
+                tk.Label(scroll_frame, text="No items found").pack()
                 return
 
             for item in results:
-                result_box.insert(tk.END, f"Name: {item['name']}\n")
-                result_box.insert(tk.END, f"Description: {item['description']}\n")
-                result_box.insert(tk.END, f"Location: {item['location']}\n")
-                result_box.insert(tk.END, f"Mobile: {item['mobile_no']}\n")
-                result_box.insert(tk.END, "-" * 40 + "\n")
+                tk.Label(scroll_frame, text=f"{item['name']} - {item['description']}").pack() 
+                tk.Label(scroll_frame, text=f"Location: {item['location']}").pack()
+                tk.Label(scroll_frame, text=f"Mobile No: {item['mobile_no']}").pack()
+
+
+                tk.Button(
+                    scroll_frame,
+                    text="Checkout",
+                    command=lambda i=item: checkout(i)
+                ).pack(pady=5)
+
+                tk.Label(scroll_frame, text="-" * 30).pack()
 
         tk.Button(self.root, text="Search", command=search).pack(pady=5)
         tk.Button(self.root, text="Back", command=self.main_menu).pack(pady=5)
@@ -173,6 +191,11 @@ class LostAndFoundGUI:
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
 
+        def checkout(item):
+            delete_item(item)
+            messagebox.showinfo("Success", "Item checked out!")
+            self.view_items()
+
         if not items:
             tk.Label(scroll_frame, text="No items found").pack()
 
@@ -180,7 +203,7 @@ class LostAndFoundGUI:
             tk.Label(scroll_frame, text=f"Name: {item['name']}", font=("Arial", 10, "bold")).pack()
             tk.Label(scroll_frame, text=f"Description: {item['description']}").pack()
             tk.Label(scroll_frame, text=f"Location: {item['location']}").pack()
-            tk.Label(scroll_frame, text=f"Mobile: {item['mobile_no']}").pack()
+            tk.Label(scroll_frame, text=f"Mobile No: {item['mobile_no']}").pack()
 
             if item["image"] and os.path.exists(item["image"]):
                 try:
@@ -194,7 +217,14 @@ class LostAndFoundGUI:
                 except:
                     pass
 
+            tk.Button(
+                scroll_frame,
+                text="Checkout",
+                command=lambda i=item: checkout(i)
+            ).pack(pady=5)
+
             tk.Label(scroll_frame, text="-" * 40).pack(pady=5)
 
         tk.Button(self.root, text="Back", command=self.main_menu).pack(pady=10)
+
 

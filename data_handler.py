@@ -54,3 +54,16 @@ def search_items(keyword):
 
     return results
 
+def delete_item(target_item):
+    items = read_items()
+
+    # Remove matching item
+    items = [item for item in items if item != target_item]
+
+    # Rewrite file
+    with open(FILE_NAME, mode='w', newline='', encoding='utf-8') as file:
+        fieldnames = ["name", "description", "location", "mobile_no", "image"]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+        writer.writeheader()
+        writer.writerows(items)
