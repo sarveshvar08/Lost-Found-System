@@ -29,7 +29,27 @@ It features a clean UI, image support, and an easy-to-use system for tracking lo
   <img src="assets/demo.gif" width="600">
 </p>
 
-> 💡 Add your own demo GIF in `assets/demo.gif`
+## 📸 Screenshots
+
+### 🏠 Home Screen
+<p align="center">
+  <img src="assets/home.png" width="600">
+</p>
+
+### ➕ Report Item
+<p align="center">
+  <img src="assets/report.png" width="600">
+</p>
+
+### 🔍 Search Items
+<p align="center">
+  <img src="assets/search.png" width="600">
+</p>
+
+### 📋 View Items
+<p align="center">
+  <img src="assets/view.png" width="600">
+</p>
 
 ---
 
