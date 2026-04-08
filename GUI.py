@@ -72,8 +72,12 @@ class LostAndFoundApp(ctk.CTk):
         def submit():
             n, d, l, m = name.get(), desc.get(), loc.get(), mobile.get()
 
-            if not validate_input(n, d, l, m):
+            validate=validate_input(n, d, l, m)
+            if validate==False:
                 messagebox.showerror("Error", "Fill all fields")
+                return
+            if validate == "mobile_error":
+                messagebox.showerror("Error", "Invalid mobile number")
                 return
 
             if not os.path.exists("images"):
