@@ -3,6 +3,8 @@ def validate_input(name, description, location, mobile_no):
     
     if not name.strip() or not description.strip() or not location.strip() or not mobile_no.strip():
         return False
+    if not mobile_no.isdigit() or len(mobile_no) != 10:
+        return False
     return True
 
 # Format the item data into a dictionary
